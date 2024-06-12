@@ -2,29 +2,71 @@
 <html>
 <head>
     <title>Chat</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        /* Estilos padrão */
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        /* Estilos para telas menores que 600px */
+        @media (max-width: 600px) {
+            #messages {
+                font-size: 14px;
+            }
+            /* Adicione mais estilos conforme necessário */
+        }
+    </style>
 </head>
 <body>
     <h1>WebSocket Chat</h1>
-    <form action="" onsubmit="sendMessage(event)">
-        <input type="text" id="messageText" autocomplete="off"/>
-        <button>Send</button>
+    <form action="" onsubmit="connect(event)">
+        <label for="username">Name:</label>
+        <input type="text" id="username" autocomplete="off" required/>
+        <button type="submit">Connect</button>
     </form>
-    <ul id="messages">
-    </ul>
+    <div id="chat" style="display:none;">
+        <form action="" onsubmit="sendMessage(event)">
+            <input type="text" id="messageText" autocomplete="off" required/>
+            <button type="submit">Send</button>
+        </form>
+        <ul id="messages">
+        </ul>
+        <button onclick="disconnect()">Disconnect</button>
+    </div>
     <script>
-        var ws = new WebSocket("ws://localhost:8000/ws");
-        ws.onmessage = function(event) {
-            var messages = document.getElementById('messages')
-            var message = document.createElement('li')
-            var content = document.createTextNode(event.data)
-            message.appendChild(content)
-            messages.appendChild(message)
-        };
+        var ws;
+        var username;
+
+        function connect(event) {
+            username = document.getElementById("username").value;
+            ws = new WebSocket("ws://localhost:8000/ws?username=" + username);
+            ws.onmessage = function(event) {
+                var messages = document.getElementById('messages')
+                var message = document.createElement('li')
+                var content = document.createTextNode(event.data)
+                message.appendChild(content)
+                messages.appendChild(message)
+            };
+            ws.onopen = function(event) {
+                document.getElementById('chat').style.display = 'block';
+            };
+            ws.onclose = function(event) {
+                alert("Disconnected");
+                document.getElementById('chat').style.display = 'none';
+            };
+            event.preventDefault();
+        }
+
         function sendMessage(event) {
             var input = document.getElementById("messageText")
             ws.send(input.value)
             input.value = ''
             event.preventDefault()
+        }
+
+        function disconnect() {
+            ws.close();
         }
     </script>
 </body>
