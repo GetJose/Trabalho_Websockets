@@ -1,6 +1,7 @@
 # Trabalho_Websockets - Chat com FastAPI
-
-Este projeto é uma aplicação de chat simples utilizando WebSockets com o framework FastAPI.
+Integrantes: Alan Pablo Alves da Silva, Carlos Eduardo Cardoso da Mota, Getúlio José Lima dos Santos,
+Rafael Dias Rodrigues, Robson Luis Figueiredo Júnior
+Este projeto é uma aplicação de chat simples feito em Python utilizando WebSockets como o framework FastAPI.
 
 Requisitos:
 
@@ -8,10 +9,10 @@ Python 3.7+
 FastAPI
 Uvicorn
 
-Instalação
-Clone o repositório:
+Instalação:
+Clone o repositório que esta ospedado em https://github.com/GetJose/Trabalho_Websockets 
 
-git clone https://github.com/seuusuario/websocket-chat.git
+ou use o comando git clone https://github.com/seuusuario/websocket-chat.git
 cd websocket-chat
 
 Crie um ambiente virtual (opcional, mas recomendado):
